@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: amq-broker-springboot-starter-consumer-one
+data:
+  AMQ_BROKER_QUEUE: amq-sample-producer
+  AMQ_BROKER_0: amq-sample-producer
+  AMQ_BROKER_1: amq-sample-producer
+  AMQ_BROKER_URL: amq-sample-producer
