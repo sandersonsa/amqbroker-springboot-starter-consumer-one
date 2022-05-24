@@ -19,6 +19,9 @@ public class AmqBrokerSpringbootStarterConsumerOneApplication implements Command
     @Value("${app.springboot.queue}")
     private String destination;
 
+	@Value("${app.springboot.consumer.number}")
+    private String consumerNumber;
+
     public static void main(String[] args) {
         SpringApplication.run(AmqBrokerSpringbootStarterConsumerOneApplication.class, args);
     }
@@ -35,7 +38,7 @@ public class AmqBrokerSpringbootStarterConsumerOneApplication implements Command
 
     @JmsListener(destination = "${app.springboot.queue}")
     public void receiveMessage(String text) {
-        System.out.println(String.format(" ## Received Consumer One :: '%s'", text));
+        System.out.println(String.format(" ## Received Consumer - %s :: '%s'", consumerNumber, text));
     }
 }
 
