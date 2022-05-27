@@ -13,6 +13,7 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
 import javax.jms.ConnectionFactory;
+import javax.jms.Session;
 
 @EnableJms
 @Configuration
@@ -35,6 +36,8 @@ public class AmqConfig implements JmsListenerConfigurer {
         factory.setConnectionFactory(connectionFactory);
         factory.setErrorHandler(new DefaultErrorHandler());
         factory.setMessageConverter(messageConverter());
+        factory.setSessionAcknowledgeMode(Session.AUTO_ACKNOWLEDGE);
+        factory.setSessionTransacted(true);
         return factory;
     }
 
