@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Value;
 
 @EnableJms
@@ -39,7 +40,9 @@ public class AmqBrokerSpringbootStarterConsumerOneApplication implements Command
         this.jmsTemplate.convertAndSend(destination, text);
     }
 
-    @JmsListener(destination = "${app.springboot.queue}")
+    // @JmsListener(destination = "${app.springboot.queue}")
+    @JmsListener(destination = "${app.springboot.queue}", containerFactory = "myFactory")
+    @Transactional
     public void receiveMessage(String text) {
         try {
             System.out.println(String.format(" ## Received Consumer - %s :: '%s'", consumerNumber, text));
