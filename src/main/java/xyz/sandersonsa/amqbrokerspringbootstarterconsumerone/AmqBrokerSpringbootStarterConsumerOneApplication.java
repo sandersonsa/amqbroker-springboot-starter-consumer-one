@@ -11,10 +11,15 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.extern.slf4j.Slf4j;
+import xyz.sandersonsa.amqbrokerspringbootstarterconsumerone.config.JmsProcessingException;
+
 import org.springframework.beans.factory.annotation.Value;
 
 @EnableJms
 @SpringBootApplication
+@Slf4j
 public class AmqBrokerSpringbootStarterConsumerOneApplication implements CommandLineRunner {
     
     @Autowired
@@ -36,21 +41,15 @@ public class AmqBrokerSpringbootStarterConsumerOneApplication implements Command
     }
 
     public void sendMessage(String text) {
-        System.out.println(String.format(" ## Sending '%s'", text));
+        log.info(String.format(" ## Sending '%s'", text));
         this.jmsTemplate.convertAndSend(destination, text);
     }
 
-    // @JmsListener(destination = "${app.springboot.queue}")
     @JmsListener(destination = "${app.springboot.queue}")
-    public void receiveMessage(String text) throws JMSException {
-        try {
-            System.out.println(String.format(" ## Received Consumer - %s :: '%s'", consumerNumber, text));
-            throw new JMSException(" -- Preservar mensage -- " + text);
-            // throw new RuntimeException(" -- Preservar mensage -- " + text);
-        } catch (RuntimeException e) {
-            System.out.println(String.format(" ## ERROR :: - %s", e.getMessage()));
-        }
-        
+    public void receiveMessage(String text) throws Exception {
+        log.info(String.format(" ## Received Consumer - %s :: '%s'", consumerNumber, text));
+        // processing or the order
+        throw new JmsProcessingException("problem occurred while processing the order.");
     }
 }
 
