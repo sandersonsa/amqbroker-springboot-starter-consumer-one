@@ -1,5 +1,8 @@
 package xyz.sandersonsa.amqbrokerspringbootstarterconsumerone;
 
+import javax.jms.JMSException;
+import javax.management.JMException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -38,7 +41,13 @@ public class AmqBrokerSpringbootStarterConsumerOneApplication implements Command
 
     @JmsListener(destination = "${app.springboot.queue}")
     public void receiveMessage(String text) {
-        System.out.println(String.format(" ## Received Consumer - %s :: '%s'", consumerNumber, text));
+        try {
+            System.out.println(String.format(" ## Received Consumer - %s :: '%s'", consumerNumber, text));
+            throw new JMSException("Preservar mensage");
+        } catch (JMSException e) {
+            System.out.println(String.format(" ## Manter Mensagem - %s", text));
+        }
+        
     }
 }
 
