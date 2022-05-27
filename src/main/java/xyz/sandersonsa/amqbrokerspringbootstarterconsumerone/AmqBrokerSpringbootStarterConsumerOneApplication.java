@@ -43,9 +43,9 @@ public class AmqBrokerSpringbootStarterConsumerOneApplication implements Command
     public void receiveMessage(String text) {
         try {
             System.out.println(String.format(" ## Received Consumer - %s :: '%s'", consumerNumber, text));
-            throw new JMSException("Preservar mensage");
+            throw new JMSException(" -- Preservar mensage -- " + text);
         } catch (JMSException e) {
-            System.out.println(String.format(" ## Manter Mensagem - %s", text));
+            System.out.println(String.format(" ## ERROR :: - %s", e.getMessage()));
         }
         
     }
