@@ -41,9 +41,8 @@ public class AmqBrokerSpringbootStarterConsumerOneApplication implements Command
     }
 
     // @JmsListener(destination = "${app.springboot.queue}")
-    @JmsListener(destination = "${app.springboot.queue}", containerFactory = "myFactory")
-    @Transactional
-    public void receiveMessage(String text) {
+    @JmsListener(destination = "${app.springboot.queue}")
+    public void receiveMessage(String text) throws JMSException {
         try {
             System.out.println(String.format(" ## Received Consumer - %s :: '%s'", consumerNumber, text));
             throw new JMSException(" -- Preservar mensage -- " + text);
