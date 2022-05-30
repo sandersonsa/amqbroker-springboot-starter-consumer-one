@@ -48,8 +48,8 @@ public class AmqBrokerSpringbootStarterConsumerOneApplication implements Command
     @JmsListener(destination = "${app.springboot.queue}")
     public void receiveMessage(String text) throws Exception {
         log.info(String.format(" ## Received Consumer - %s :: '%s'", consumerNumber, text));
-        // processing or the order
-        throw new JmsProcessingException("problem occurred while processing the order.");
+        // Lançar ERROR
+        // throw new JmsProcessingException("problem occurred while processing message.");
     }
 }
 

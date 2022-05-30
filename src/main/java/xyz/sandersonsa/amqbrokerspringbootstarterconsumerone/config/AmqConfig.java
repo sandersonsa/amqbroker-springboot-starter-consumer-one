@@ -36,6 +36,7 @@ public class AmqConfig implements JmsListenerConfigurer {
         factory.setConnectionFactory(connectionFactory);
         factory.setErrorHandler(new DefaultErrorHandler());
         factory.setMessageConverter(messageConverter());
+        //Importante
         factory.setSessionAcknowledgeMode(Session.AUTO_ACKNOWLEDGE);
         factory.setSessionTransacted(true);
         return factory;
